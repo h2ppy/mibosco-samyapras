@@ -44,41 +44,54 @@
     }
     .hero {
       text-align: center;
-      background: linear-gradient(to bottom, #f9f6f1, #f2eee7);
-      padding: 4rem 2rem 2rem;
+      background: linear-gradient(to bottom, #f9f6f1, #efe7dd);
+      padding: 5rem 2rem 3rem;
     }
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       color: var(--primary);
+      margin-bottom: 1rem;
     }
     .hero p {
       font-size: 1.2rem;
-      margin-top: 1rem;
-      max-width: 700px;
-      margin-inline: auto;
+      max-width: 720px;
+      margin: auto;
     }
     section {
       padding: 3rem 2rem;
-      max-width: 960px;
+      max-width: 1100px;
       margin: auto;
     }
     .card {
       background: var(--card);
       padding: 2rem;
-      border-radius: 10px;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     }
     h2 {
       color: var(--primary);
+      margin-bottom: 1rem;
     }
-    .gallery, .highlight, .diagram {
+    ul {
+      padding-left: 1.5rem;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
       margin-top: 2rem;
     }
-    img {
+    .gallery img, .hero img, .diagram img {
       width: 100%;
       border-radius: 10px;
-      margin-bottom: 1rem;
+      background: #ddd;
+      object-fit: cover;
+      height: auto;
+    }
+    .diagram img {
+      max-height: 400px;
+      object-fit: contain;
     }
     footer {
       background: var(--primary);
@@ -91,7 +104,7 @@
 </head>
 <body>
   <header>
-    <img src="logo-placeholder.png" alt="Logo">
+    <img src="logo-placeholder.png" alt="MiBOSCO Logo">
     <nav>
       <a href="#foundation">Foundation</a>
       <a href="#ashram">Ashram</a>
@@ -101,8 +114,8 @@
   </header>
 
   <div class="hero">
-    <h1>Welcome to MiBOSCO Foundation & Samyaprāś Ashram</h1>
-    <p>Where ancient wisdom, dharmic living, and sustainable healing come together.</p>
+    <h1>MiBOSCO Foundation & Samyaprāś Ashram</h1>
+    <p>Where ancient wisdom, dharmic living, and sustainable healing come together to nurture the body, mind, and soul.</p>
   </div>
 
   <section id="foundation">
@@ -138,22 +151,24 @@
     </div>
   </section>
 
-  <section class="highlight" id="gallery">
+  <section id="gallery">
     <div class="card">
       <h2>Gallery Highlights</h2>
-      <img src="image1-placeholder.jpg" alt="Ashram Cottage">
-      <img src="image2-placeholder.jpg" alt="Meditation Hall">
-      <img src="image3-placeholder.jpg" alt="Spiritual Gathering">
-      <img src="image4-placeholder.jpg" alt="Organic Farm View">
-      <img src="image5-placeholder.jpg" alt="Evening Bhajans">
-      <img src="goshala-view-placeholder.jpg" alt="Goshala View">
+      <div class="gallery">
+        <img src="image1-placeholder.jpeg" alt="Ashram Cottage">
+        <img src="image2-placeholder.jpeg" alt="Meditation Hall">
+        <img src="image3-placeholder.jpeg" alt="Spiritual Gathering">
+        <img src="image4-placeholder.jpeg" alt="Organic Farm View">
+        <img src="image5-placeholder.jpeg" alt="Evening Bhajans">
+        <img src="goshala-view-placeholder.jpeg" alt="Goshala View">
+      </div>
     </div>
   </section>
 
-  <section class="diagram" id="plan">
-    <div class="card">
+  <section id="plan">
+    <div class="card diagram">
       <h2>Master Plan Layout</h2>
-      <img src="masterplan-schematic.jpg" alt="Vrindavan Ashram Masterplan">
+      <img src="masterplan-schematic.jpeg" alt="Vrindavan Ashram Masterplan">
       <p>This schematic represents the full ecological zoning of the 10-acre Tapovan Ashram, balancing climate, tradition, and community living.</p>
     </div>
   </section>
