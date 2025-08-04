@@ -26,6 +26,102 @@
       box-sizing: border-box;
     }
 
+    /* Splash Screen Animation */
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--color-sand);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .splash-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .splash-logo {
+      text-align: center;
+      animation: logoPop 2s ease-in-out;
+    }
+
+    .splash-logo img {
+      width: 120px;
+      height: 120px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      animation: logoBounce 0.6s ease-in-out 0.5s both;
+    }
+
+    .splash-logo h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--color-earth);
+      font-size: 2.5rem;
+      font-weight: 700;
+      animation: textFadeIn 1s ease-in-out 1s both;
+    }
+
+    .splash-logo p {
+      color: var(--color-text-light);
+      font-size: 1.1rem;
+      margin-top: 10px;
+      animation: textFadeIn 1s ease-in-out 1.2s both;
+    }
+
+    @keyframes logoPop {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes logoBounce {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes textFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Hide main content initially */
+    .main-content, .navbar, .language-toggle {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .main-content.show, .navbar.show, .language-toggle.show {
+      opacity: 1;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       line-height: 1.7;
@@ -843,6 +939,16 @@
   </style>
 </head>
 <body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splashScreen">
+    <div class="splash-logo">
+      <img src="logo-placeholder.png" alt="MiBOSCO Logo">
+      <h1>MiBOSCO</h1>
+      <p>Where Mind Meets Culture</p>
+      <p>Where Dharma Heals</p>
+    </div>
+  </div>
+
   <!-- Language Toggle -->
   <button class="language-toggle" onclick="toggleLanguage()">
     <span class="lang-en">हिंदी</span>
@@ -1311,6 +1417,34 @@
   </footer>
 
   <script>
+    // Splash Screen Animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const splashScreen = document.getElementById('splashScreen');
+      const mainContent = document.querySelector('.main-content');
+      const navbar = document.querySelector('.navbar');
+      const languageToggle = document.querySelector('.language-toggle');
+
+      // Hide main content initially
+      mainContent.style.opacity = '0';
+      navbar.style.opacity = '0';
+      languageToggle.style.opacity = '0';
+
+      // After 3 seconds, fade out splash screen and show main content
+      setTimeout(() => {
+        splashScreen.classList.add('fade-out');
+        
+        // Show main content after splash fades out
+        setTimeout(() => {
+          mainContent.style.opacity = '1';
+          navbar.style.opacity = '1';
+          languageToggle.style.opacity = '1';
+          
+          // Remove splash screen from DOM
+          splashScreen.remove();
+        }, 1000);
+      }, 3000);
+    });
+
     // Carousel functionality
     let currentSlideIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
