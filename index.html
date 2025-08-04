@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MiBOSCO Foundation & Samyaprāś Ashram</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     :root {
@@ -26,8 +25,104 @@
       box-sizing: border-box;
     }
 
+    /* Splash Screen Animation */
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--color-sand);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .splash-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .splash-logo {
+      text-align: center;
+      animation: logoPop 2s ease-in-out;
+    }
+
+    .splash-logo img {
+      width: 120px;
+      height: 120px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      animation: logoBounce 0.6s ease-in-out 0.5s both;
+    }
+
+    .splash-logo h1 {
+      font-family: 'Times New Roman', Times, serif;
+      color: var(--color-earth);
+      font-size: 2.5rem;
+      font-weight: 700;
+      animation: textFadeIn 1s ease-in-out 1s both;
+    }
+
+    .splash-logo p {
+      color: var(--color-text-light);
+      font-size: 1.1rem;
+      margin-top: 10px;
+      animation: textFadeIn 1s ease-in-out 1.2s both;
+    }
+
+    @keyframes logoPop {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes logoBounce {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes textFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Hide main content initially */
+    .main-content, .navbar, .language-toggle {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .main-content.show, .navbar.show, .language-toggle.show {
+      opacity: 1;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Times New Roman', Times, serif;
       line-height: 1.7;
       color: var(--color-text-dark);
       background: var(--color-sand);
@@ -87,7 +182,7 @@
     }
 
     .logo h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 1.5rem;
     }
@@ -177,7 +272,7 @@
     }
 
     .carousel-content h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       font-size: 3.5rem;
       margin-bottom: 1rem;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -271,7 +366,7 @@
     }
 
     .section-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       font-size: 2.5rem;
       color: var(--color-earth);
       text-align: center;
@@ -314,7 +409,7 @@
     }
 
     .foundation-card h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       margin-bottom: 1rem;
       font-size: 1.5rem;
@@ -349,7 +444,7 @@
     }
 
     .about-intro h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 2rem;
       margin-bottom: 1rem;
@@ -383,7 +478,7 @@
     }
 
     .vision-card h4, .purpose-card h4 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 1.5rem;
       margin-bottom: 1rem;
@@ -424,7 +519,7 @@
     }
 
     .program-card h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 1.4rem;
       margin-bottom: 1rem;
@@ -452,7 +547,7 @@
     }
 
     .founder-intro h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 1.8rem;
       margin-bottom: 0.5rem;
@@ -471,7 +566,7 @@
     }
 
     .founder-text h4 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 1.3rem;
       margin: 2rem 0 1rem 0;
@@ -515,7 +610,7 @@
     }
 
     .ashram-intro h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 1.8rem;
       margin-bottom: 1rem;
@@ -553,7 +648,7 @@
     }
 
     .ashram-feature h4 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 1.3rem;
       margin-bottom: 1rem;
@@ -580,7 +675,7 @@
     }
 
     .contact-intro h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 1.8rem;
       margin-bottom: 1rem;
@@ -617,7 +712,7 @@
     }
 
     .contact-method h4 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       color: var(--color-earth);
       font-size: 1.3rem;
       margin-bottom: 1rem;
@@ -690,7 +785,7 @@
     }
 
     .footer h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Times New Roman', Times, serif;
       margin-bottom: 1rem;
     }
 
@@ -843,6 +938,16 @@
   </style>
 </head>
 <body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splashScreen">
+    <div class="splash-logo">
+      <img src="logo-placeholder.png" alt="MiBOSCO Logo">
+      <h1>MiBOSCO</h1>
+      <p>Where Mind Meets Culture</p>
+      <p>Where Dharma Heals</p>
+    </div>
+  </div>
+
   <!-- Language Toggle -->
   <button class="language-toggle" onclick="toggleLanguage()">
     <span class="lang-en">हिंदी</span>
@@ -1311,6 +1416,34 @@
   </footer>
 
   <script>
+    // Splash Screen Animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const splashScreen = document.getElementById('splashScreen');
+      const mainContent = document.querySelector('.main-content');
+      const navbar = document.querySelector('.navbar');
+      const languageToggle = document.querySelector('.language-toggle');
+
+      // Hide main content initially
+      mainContent.style.opacity = '0';
+      navbar.style.opacity = '0';
+      languageToggle.style.opacity = '0';
+
+      // After 3 seconds, fade out splash screen and show main content
+      setTimeout(() => {
+        splashScreen.classList.add('fade-out');
+        
+        // Show main content after splash fades out
+        setTimeout(() => {
+          mainContent.style.opacity = '1';
+          navbar.style.opacity = '1';
+          languageToggle.style.opacity = '1';
+          
+          // Remove splash screen from DOM
+          splashScreen.remove();
+        }, 1000);
+      }, 3000);
+    });
+
     // Carousel functionality
     let currentSlideIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
