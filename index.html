@@ -39,6 +39,7 @@
       align-items: center;
       z-index: 10000;
       transition: opacity 1s ease-in-out;
+      overflow: hidden;
     }
 
     .splash-screen.fade-out {
@@ -48,7 +49,8 @@
 
     .splash-logo {
       text-align: center;
-      animation: logoPop 2s ease-in-out;
+      animation: logoPanZoom 3s ease-in-out;
+      position: relative;
     }
 
     .splash-logo img {
@@ -74,41 +76,46 @@
       animation: textFadeIn 1s ease-in-out 1.2s both;
     }
 
-    @keyframes logoPop {
+    @keyframes logoPanZoom {
       0% {
-        transform: scale(0);
+        transform: scale(0.5);
         opacity: 0;
       }
       50% {
-        transform: scale(1.1);
+        transform: scale(1.2);
         opacity: 1;
       }
       100% {
         transform: scale(1);
-        opacity: 1;
       }
     }
 
     @keyframes logoBounce {
       0% {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+      }
+      25% {
+        transform: translateY(-15px) scale(1.05);
       }
       50% {
-        transform: translateY(-20px);
+        transform: translateY(-25px) scale(1.1);
+      }
+      75% {
+        transform: translateY(-10px) scale(1.05);
       }
       100% {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
     @keyframes textFadeIn {
       0% {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px) scale(0.9);
       }
       100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
@@ -547,11 +554,38 @@
       box-shadow: var(--shadow-soft);
     }
 
+    .founder-image {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      margin: 0 auto 1.5rem auto;
+      display: block;
+      object-fit: cover;
+      object-position: center 10%;
+      border: 4px solid var(--color-earth);
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.3s ease;
+    }
+
+    .founder-image:hover {
+      transform: scale(1.05);
+    }
+
+    .founder-intro h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--color-earth);
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
     .founder-intro h3 {
       font-family: 'Playfair Display', serif;
       color: var(--color-earth);
-      font-size: 1.8rem;
+      font-size: 1.4rem;
+      font-weight: 600;
       margin-bottom: 0.5rem;
+      font-style: italic;
     }
 
     .founder-intro p {
@@ -687,10 +721,32 @@
       line-height: 1.7;
     }
 
-    .contact-methods {
+    /* Contact Grid */
+    .contact-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: 1fr;
       gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .mission-card {
+      background: linear-gradient(135deg, var(--color-earth), var(--color-deep-brown));
+      color: white;
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .mission-card h4,
+    .mission-card p {
+      color: white;
+    }
+
+    .mission-card .method-icon {
+      color: white;
     }
 
     .contact-method {
@@ -705,6 +761,10 @@
     .contact-method:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-medium);
+    }
+
+    .contact-method.clickable {
+      cursor: pointer;
     }
 
     .method-icon {
@@ -722,6 +782,161 @@
     .contact-method p {
       color: var(--color-text-light);
       line-height: 1.7;
+    }
+
+    .click-hint {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--color-earth);
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    /* Responsive Grid for Contact Methods */
+    @media (min-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      
+      .mission-card {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* Make contact method clickable */
+    .contact-method {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .contact-method:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .contact-email {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(139, 115, 85, 0.1);
+      border-radius: 8px;
+      border-left: 3px solid var(--color-earth);
+    }
+
+    .contact-email p {
+      margin: 0;
+      font-weight: 500;
+      color: var(--color-earth);
+    }
+
+    /* Contact Modal */
+    .contact-modal {
+      display: none;
+      position: fixed;
+      z-index: 10001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    .contact-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: var(--shadow-medium);
+    }
+
+    .close-contact {
+      color: var(--color-earth);
+      float: right;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+
+    .close-contact:hover {
+      color: var(--color-deep-brown);
+    }
+
+    .contact-content h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--color-earth);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .contact-content h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--color-earth);
+      margin: 2rem 0 1rem 0;
+      font-size: 1.3rem;
+    }
+
+    .email-display {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(139, 115, 85, 0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--color-earth);
+      margin: 1rem 0;
+    }
+
+    .email-text {
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      color: var(--color-earth);
+      font-weight: 600;
+      margin: 0;
+      flex: 1;
+    }
+
+    .copy-btn {
+      background: var(--color-earth);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .copy-btn:hover {
+      background: var(--color-deep-brown);
+      transform: translateY(-1px);
+    }
+
+    .contact-note {
+      margin-top: 2rem;
+    }
+
+    .contact-note p {
+      color: var(--color-text-dark);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .contact-note ul {
+      color: var(--color-text-light);
+      line-height: 1.6;
+      margin-left: 1rem;
+    }
+
+    .contact-note li {
+      margin-bottom: 0.5rem;
     }
 
     /* Gallery Section */
@@ -794,6 +1009,121 @@
       opacity: 0.8;
     }
 
+    /* Legal Copyright */
+    .legal-copyright {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      border-left: 3px solid var(--color-earth);
+    }
+
+    .legal-copyright p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .legal-copyright p:first-child {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Image Disclaimer */
+    .image-disclaimer {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      border-left: 3px solid var(--color-earth);
+    }
+
+    .image-disclaimer p {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Legal Links */
+    .legal-links {
+      margin-top: 1rem;
+    }
+
+    .legal-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin: 0 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .legal-links a:hover {
+      color: white;
+    }
+
+    /* Terms & Conditions Modal */
+    .terms-modal {
+      display: none;
+      position: fixed;
+      z-index: 10001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    .terms-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: var(--shadow-medium);
+    }
+
+    .close-terms {
+      color: var(--color-earth);
+      float: right;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+
+    .close-terms:hover {
+      color: var(--color-deep-brown);
+    }
+
+    .terms-content h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--color-earth);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .terms-content h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--color-earth);
+      margin: 2rem 0 1rem 0;
+      font-size: 1.3rem;
+    }
+
+    .terms-content p {
+      color: var(--color-text-dark);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
     /* Responsive Design */
     @media (max-width: 768px) {
       .nav-links {
@@ -854,6 +1184,26 @@
       .contact-method {
         padding: 1.5rem;
       }
+
+      /* Mobile email display fixes */
+      .email-display {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding: 1rem;
+      }
+
+      .email-text {
+        font-size: 0.9rem;
+        word-break: break-all;
+        text-align: center;
+      }
+
+      .copy-btn {
+        align-self: center;
+        min-width: 80px;
+        padding: 0.75rem 1rem;
+      }
     }
 
     @media (max-width: 480px) {
@@ -875,6 +1225,23 @@
 
       .logo h2 {
         font-size: 1.2rem;
+      }
+
+      /* Extra small screen email display fixes */
+      .email-display {
+        padding: 0.75rem;
+        gap: 0.5rem;
+      }
+
+      .email-text {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+
+      .copy-btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+        min-width: 70px;
       }
     }
 
@@ -906,10 +1273,7 @@
 
     /* Ashram Section */
     .ashram-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
+      display: block;
       margin-top: 3rem;
     }
 
@@ -918,23 +1282,8 @@
       padding: 2.5rem;
       border-radius: 15px;
       box-shadow: var(--shadow-soft);
-    }
-
-    .ashram-image {
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: var(--shadow-medium);
-    }
-
-    .ashram-image img {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    .ashram-image:hover img {
-      transform: scale(1.05);
+      max-width: 800px;
+      margin: 0 auto;
     }
   </style>
 </head>
@@ -1257,20 +1606,19 @@
             <li>वन पट्टी और ध्यान उद्यान</li>
           </ul>
         </div>
-        
-        <div class="ashram-image">
-          <img src="ashram-diagram-placeholder.jpeg" alt="Ashram Design">
-        </div>
       </div>
     </section>
 
     <!-- Founder Section -->
     <section id="founder" class="section">
-      <h2 class="section-title content-en">Founder - Acharya Shubham Anand Ji</h2>
-      <h2 class="section-title content-hi">संस्थापक - आचार्य शुभम आनंद जी</h2>
+      <h2 class="section-title content-en">Our Founder</h2>
+      <h2 class="section-title content-hi">हमारे संस्थापक</h2>
       
       <div class="founder-content">
         <div class="founder-intro">
+          <img src="founder.jpeg" alt="Acharya Shubham Anand Ji" class="founder-image">
+          <h2 class="content-en">Acharya Shubham Anand Ji</h2>
+          <h2 class="content-hi">आचार्य शुभम आनंद जी</h2>
           <h3 class="content-en">"Atmano Mokshartham Jagat Hitaya Cha"</h3>
           <h3 class="content-hi">"आत्मनो मोक्षार्थम् जगत् हिताय च"</h3>
           <p class="content-en">(Seeking personal enlightenment alongside the welfare of the world)</p>
@@ -1368,37 +1716,50 @@
       <h2 class="section-title content-en">Get Involved</h2>
       <h2 class="section-title content-hi">सहयोग करें</h2>
       
-      <div class="contact-content">
-        <div class="contact-intro">
-          <h3 class="content-en">Join Our Mission</h3>
-          <h3 class="content-hi">हमारे मिशन में शामिल हों</h3>
+      <div class="contact-grid">
+        <!-- Mission Card -->
+        <div class="mission-card">
+          <div class="method-icon">🌟</div>
+          <h4 class="content-en">Join Our Mission</h4>
+          <h4 class="content-hi">हमारे मिशन में शामिल हों</h4>
           <p class="content-en">MiBOSCO Foundation thrives on the goodwill and active participation of people like you. Your involvement can light up many lives and help preserve a precious heritage. There are several ways to join our mission and make a meaningful contribution.</p>
           <p class="content-hi">MiBOSCO Foundation आप जैसे सेवाभावी लोगों की भागीदारी से ही फलता-फूलता है। आपका सहयोग कई जीवनों को रोशन कर सकता है और एक अनमोल विरासत को संरक्षित करने में मदद कर सकता है।</p>
         </div>
         
-        <div class="contact-methods">
-          <div class="contact-method">
-            <div class="method-icon">🙏</div>
-            <h4 class="content-en">Volunteer</h4>
-            <h4 class="content-hi">स्वयंसेवक</h4>
-            <p class="content-en">Join our volunteer programs and contribute your time and skills to various initiatives.</p>
-            <p class="content-hi">हमारे स्वयंसेवक कार्यक्रमों में शामिल हों और विभिन्न पहलों में अपना समय और कौशल योगदान करें।</p>
+        <!-- Contact Method Cards -->
+        <div class="contact-method clickable" onclick="openVolunteerForm()">
+          <div class="method-icon">🙏</div>
+          <h4 class="content-en">Volunteer</h4>
+          <h4 class="content-hi">स्वयंसेवक</h4>
+          <p class="content-en">Join our volunteer programs and contribute your time and skills to various initiatives.</p>
+          <p class="content-hi">हमारे स्वयंसेवक कार्यक्रमों में शामिल हों और विभिन्न पहलों में अपना समय और कौशल योगदान करें।</p>
+          <div class="click-hint">
+            <span class="content-en">Click to fill volunteer form</span>
+            <span class="content-hi">स्वयंसेवक फॉर्म भरने के लिए क्लिक करें</span>
           </div>
-          
-          <div class="contact-method">
-            <div class="method-icon">💝</div>
-            <h4 class="content-en">Donate</h4>
-            <h4 class="content-hi">दान</h4>
-            <p class="content-en">Support our programs through financial contributions to help us reach more people.</p>
-            <p class="content-hi">अधिक लोगों तक पहुँचने में हमारी मदद करने के लिए वित्तीय योगदान के माध्यम से हमारे कार्यक्रमों का समर्थन करें।</p>
+        </div>
+        
+        <div class="contact-method clickable" onclick="openDonationForm()">
+          <div class="method-icon">💝</div>
+          <h4 class="content-en">Donate</h4>
+          <h4 class="content-hi">दान</h4>
+          <p class="content-en">Support our programs through financial contributions to help us reach more people.</p>
+          <p class="content-hi">अधिक लोगों तक पहुँचने में हमारी मदद करने के लिए वित्तीय योगदान के माध्यम से हमारे कार्यक्रमों का समर्थन करें।</p>
+          <div class="click-hint">
+            <span class="content-en">Click to make a donation</span>
+            <span class="content-hi">दान करने के लिए क्लिक करें</span>
           </div>
-          
-          <div class="contact-method">
-            <div class="method-icon">📧</div>
-            <h4 class="content-en">Contact Us</h4>
-            <h4 class="content-hi">संपर्क करें</h4>
-            <p class="content-en">Get in touch with us to learn more about our programs and how you can contribute.</p>
-            <p class="content-hi">हमारे कार्यक्रमों के बारे में अधिक जानने और आप कैसे योगदान कर सकते हैं, इसके लिए हमसे संपर्क करें।</p>
+        </div>
+        
+        <div class="contact-method clickable" onclick="showContactModal()">
+          <div class="method-icon">📧</div>
+          <h4 class="content-en">Contact Us</h4>
+          <h4 class="content-hi">संपर्क करें</h4>
+          <p class="content-en">Get in touch with us to learn more about our programs and how you can contribute.</p>
+          <p class="content-hi">हमारे कार्यक्रमों के बारे में अधिक जानने और आप कैसे योगदान कर सकते हैं, इसके लिए हमसे संपर्क करें।</p>
+          <div class="click-hint">
+            <span class="content-en">Click to view contact details</span>
+            <span class="content-hi">संपर्क विवरण देखने के लिए क्लिक करें</span>
           </div>
         </div>
       </div>
@@ -1412,9 +1773,102 @@
       <h3 class="content-hi">मिबोस्को फाउंडेशन और सम्यप्राश आश्रम</h3>
       <p class="content-en">Where Mind Meets Culture — Where Dharma Heals</p>
       <p class="content-hi">जहां मन संस्कृति से मिलता है — जहां धर्म चंगा करता है</p>
-      <p>&copy; 2025 All rights reserved.</p>
+      
+      <!-- Legal Copyright -->
+      <div class="legal-copyright">
+        <p class="content-en">©️ 2025 MiBOSCO Foundation. All Rights Reserved.</p>
+        <p class="content-hi">©️ 2025 मिबोस्को फाउंडेशन। सर्वाधिकार सुरक्षित।</p>
+        <p class="content-en">All content, including conceptual visuals and original works, is the intellectual and creative property of MiBOSCO Foundation. Any reproduction, distribution, or use without written consent is strictly prohibited.</p>
+        <p class="content-hi">सभी सामग्री, अवधारणात्मक दृश्य और मूल कार्यों सहित, मिबोस्को फाउंडेशन की बौद्धिक और रचनात्मक संपदा है। लिखित सहमति के बिना किसी भी प्रजनन, वितरण या उपयोग को सख्ती से प्रतिबंधित किया गया है।</p>
+      </div>
+      
+      <!-- Legal Links -->
+      <div class="legal-links">
+        <a href="#terms" class="content-en">Terms & Conditions</a>
+        <a href="#terms" class="content-hi">नियम और शर्तें</a>
+      </div>
     </div>
   </footer>
+
+  <!-- Terms & Conditions Modal -->
+  <div id="terms" class="terms-modal">
+    <div class="terms-content">
+      <span class="close-terms">&times;</span>
+      <h2 class="content-en">📋 LEGAL DISCLAIMER & TERMS OF USE</h2>
+      <h2 class="content-hi">📋 कानूनी अस्वीकरण और उपयोग की शर्तें</h2>
+      
+      <h3 class="content-en">Visual Content & Conceptual Image Disclaimer</h3>
+      <h3 class="content-hi">दृश्य सामग्री और अवधारणात्मक छवि अस्वीकरण</h3>
+      
+      
+      
+      <p class="content-en">The MiBOSCO Foundation website includes original visuals and conceptual imagery designed to convey the spiritual, cultural, and environmental values of the Foundation. These visuals are symbolic in nature and are created for representational purposes. They are not intended to represent real individuals, places, or events unless explicitly mentioned.</p>
+      <p class="content-hi">मिबोस्को फाउंडेशन वेबसाइट में मूल दृश्य और अवधारणात्मक छवियां शामिल हैं जो फाउंडेशन के आध्यात्मिक, सांस्कृतिक और पर्यावरणीय मूल्यों को व्यक्त करने के लिए डिज़ाइन की गई हैं। ये दृश्य प्रकृति में प्रतीकात्मक हैं और प्रतिनिधि उद्देश्यों के लिए बनाए गए हैं। वे स्पष्ट रूप से उल्लेख किए बिना वास्तविक व्यक्तियों, स्थानों या घटनाओं का प्रतिनिधित्व करने का इरादा नहीं रखते हैं।</p>
+      
+      <p class="content-en">All imagery and visual storytelling are curated with respect to the Foundation's ethos and presented solely for non-commercial, devotional, educational, and community engagement purposes.</p>
+      <p class="content-hi">सभी छवियां और दृश्य कहानी फाउंडेशन के लोकाचार के सम्मान के साथ क्यूरेट की गई हैं और केवल गैर-वाणिज्यिक, भक्ति, शैक्षिक और सामुदायिक जुड़ाव उद्देश्यों के लिए प्रस्तुत की गई हैं।</p>
+      
+      <h3 class="content-en">Intellectual Property & Usage Rights</h3>
+      <h3 class="content-hi">बौद्धिक संपदा और उपयोग अधिकार</h3>
+      
+      <p class="content-en">All content on this website—including texts, photographs, conceptual images, illustrations, layouts, and other creative elements—is the sole intellectual property of MiBOSCO Foundation.</p>
+      <p class="content-hi">इस वेबसाइट पर सभी सामग्री—पाठ, फोटोग्राफ, अवधारणात्मक छवियां, चित्र, लेआउट और अन्य रचनात्मक तत्वों सहित—मिबोस्को फाउंडेशन की एकमात्र बौद्धिक संपदा है।</p>
+      
+      <p class="content-en">Use of any content, in part or whole, without prior written permission is not permitted. This includes reproduction, modification, distribution, public display, or use for commercial, editorial, or derivative purposes.</p>
+      <p class="content-hi">पूर्व लिखित अनुमति के बिना किसी भी सामग्री का उपयोग, आंशिक या पूर्ण, अनुमति नहीं है। इसमें प्रजनन, संशोधन, वितरण, सार्वजनिक प्रदर्शन, या वाणिज्यिक, संपादकीय, या व्युत्पन्न उद्देश्यों के लिए उपयोग शामिल है।</p>
+      
+      <p class="content-en">We reserve the right to pursue appropriate legal or remedial action in the event of unauthorized use.</p>
+      <p class="content-hi">अनधिकृत उपयोग की स्थिति में उचित कानूनी या उपचारात्मक कार्रवाई करने का अधिकार सुरक्षित रखते हैं।</p>
+      
+      <h3 class="content-en">Brand Identity & Trademark Protection</h3>
+      <h3 class="content-hi">ब्रांड पहचान और ट्रेडमार्क संरक्षण</h3>
+      
+      <p class="content-en">The name MiBOSCO Foundation, its logo, and associated brand assets—including its storytelling, visual identity, program names, and curated communication—represent the unique cultural and spiritual mission of the Foundation. These assets are protected under applicable intellectual and moral rights, and may not be imitated or reproduced in any manner.</p>
+      <p class="content-hi">मिबोस्को फाउंडेशन का नाम, इसका लोगो, और संबंधित ब्रांड संपत्तियां—इसकी कहानी, दृश्य पहचान, कार्यक्रम नाम, और क्यूरेटेड संचार सहित—फाउंडेशन के अद्वितीय सांस्कृतिक और आध्यात्मिक मिशन का प्रतिनिधित्व करती हैं। ये संपत्तियां लागू बौद्धिक और नैतिक अधिकारों के तहत संरक्षित हैं, और किसी भी तरीके से नकल या पुनरुत्पादन नहीं किया जा सकता है।</p>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="contact-modal">
+    <div class="contact-content">
+      <span class="close-contact">&times;</span>
+      <h2 class="content-en">📧 Contact Information</h2>
+      <h2 class="content-hi">📧 संपर्क जानकारी</h2>
+      
+      <div class="contact-details">
+        <div class="email-section">
+          <h3 class="content-en">Email Address</h3>
+          <h3 class="content-hi">ईमेल पता</h3>
+          <div class="email-display">
+            <p class="email-text">acharyashubhamanandji0@gmail.com</p>
+            <button class="copy-btn" onclick="copyEmail()">
+              <span class="content-en">Copy</span>
+              <span class="content-hi">कॉपी करें</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="contact-note">
+          <p class="content-en">Please use this email address to get in touch with us regarding:</p>
+          <p class="content-hi">कृपया इस ईमेल पते का उपयोग करें:</p>
+          <ul class="content-en">
+            <li>General inquiries about MiBOSCO Foundation</li>
+            <li>Program participation and volunteering</li>
+            <li>Donations and support</li>
+            <li>Ashram visits and spiritual guidance</li>
+            <li>Partnership and collaboration opportunities</li>
+          </ul>
+          <ul class="content-hi">
+            <li>मिबोस्को फाउंडेशन के बारे में सामान्य पूछताछ</li>
+            <li>कार्यक्रम में भागीदारी और स्वयंसेवा</li>
+            <li>दान और समर्थन</li>
+            <li>आश्रम यात्रा और आध्यात्मिक मार्गदर्शन</li>
+            <li>साझेदारी और सहयोग के अवसर</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     // Splash Screen Animation
@@ -1575,6 +2029,98 @@
         el.style.display = 'none';
       });
     });
+
+    // Terms & Conditions Modal
+    const termsModal = document.getElementById('terms');
+    const termsLinks = document.querySelectorAll('a[href="#terms"]');
+    const closeTerms = document.querySelector('.close-terms');
+
+    // Open modal when terms links are clicked
+    termsLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        termsModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      });
+    });
+
+    // Close modal when X is clicked
+    closeTerms.addEventListener('click', () => {
+      termsModal.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Restore scrolling
+    });
+
+    // Close modal when clicking outside the content
+    termsModal.addEventListener('click', (e) => {
+      if (e.target === termsModal) {
+        termsModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && termsModal.style.display === 'block') {
+        termsModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Copy email function
+    function copyEmail() {
+      const emailText = document.querySelector('.email-text').textContent;
+      const tempInput = document.createElement('input');
+      tempInput.value = emailText;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      alert('Email copied to clipboard!');
+    }
+
+    // Contact Modal Functions
+    function showContactModal() {
+      const contactModal = document.getElementById('contactModal');
+      contactModal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close contact modal when X is clicked
+    document.addEventListener('DOMContentLoaded', function() {
+      const closeContact = document.querySelector('.close-contact');
+      const contactModal = document.getElementById('contactModal');
+
+      closeContact.addEventListener('click', () => {
+        contactModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
+
+      // Close contact modal when clicking outside
+      contactModal.addEventListener('click', (e) => {
+        if (e.target === contactModal) {
+          contactModal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      });
+
+      // Close contact modal with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && contactModal.style.display === 'block') {
+          contactModal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+
+    // Volunteer Form Function
+    function openVolunteerForm() {
+      window.open('https://forms.gle/5UyGu3EU5R6Qupsg6', '_blank');
+    }
+
+    // Donation Form Function
+    function openDonationForm() {
+      window.open('https://forms.gle/8kenRoeywYnqWbiJ8', '_blank');
+    }
   </script>
 </body>
 </html>
