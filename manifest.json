@@ -12,28 +12,40 @@
   "dir": "ltr",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🙏</text></svg>",
+      "src": "favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🙏</text></svg>",
+      "src": "android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "categories": ["education", "lifestyle", "spirituality"],
   "screenshots": [
     {
-      "src": "https://miboscofoundation.org/images/screenshot-desktop.jpg",
+      "src": "https://mibosco.com/images/screenshot-desktop.jpg",
       "sizes": "1280x720",
       "type": "image/jpeg",
       "form_factor": "wide"
     },
     {
-      "src": "https://miboscofoundation.org/images/screenshot-mobile.jpg",
+      "src": "https://mibosco.com/images/screenshot-mobile.jpg",
       "sizes": "390x844",
       "type": "image/jpeg",
       "form_factor": "narrow"
